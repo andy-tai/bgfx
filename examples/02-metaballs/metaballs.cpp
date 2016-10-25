@@ -471,7 +471,7 @@ class ExampleMetaballs : public entry::AppI
 		m_width  = 1280;
 		m_height = 720;
 		m_debug  = BGFX_DEBUG_TEXT;
-		m_reset  = BGFX_RESET_VSYNC;
+		m_reset  = /*BGFX_RESET_VSYNC |*/ BGFX_RESET_HMD;
 
 		bgfx::init(args.m_type, args.m_pciId);
 		bgfx::reset(m_width, m_height, m_reset);
@@ -573,6 +573,9 @@ class ExampleMetaballs : public entry::AppI
 
 			// Set view and projection matrix for view 0.
 			const bgfx::HMD* hmd = bgfx::getHMD();
+						
+			bgfx::dbgTextPrintf(0, 3, 0x6f, "HMD available? %d", hmd != 0);
+
 			if (NULL != hmd && 0 != (hmd->flags & BGFX_HMD_RENDERING) )
 			{
 				float view[16];
