@@ -24,7 +24,7 @@ endif
 # $(info $(OS))
 
 BX_DIR?=../bx
-GENIE?=$(BX_DIR)/tools/bin/$(OS)/genie
+GENIE?=$(BX_DIR)/tools/bin/$(OS)/genie --with-amalgamated
 NINJA?=$(BX_DIR)/tools/bin/$(OS)/ninja
 
 .PHONY: help
