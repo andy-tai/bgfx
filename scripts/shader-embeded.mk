@@ -1,6 +1,6 @@
 #
-# Copyright 2011-2016 Branimir Karadzic. All rights reserved.
-# License: http://www.opensource.org/licenses/BSD-2-Clause
+# Copyright 2011-2017 Branimir Karadzic. All rights reserved.
+# License: https://github.com/bkaradzic/bgfx#license-bsd-2-clause
 #
 
 THISDIR:=$(dir $(lastword $(MAKEFILE_LIST)))
@@ -32,6 +32,8 @@ vs_%.bin.h : vs_%.sc
 	-@cat $(SHADER_TMP) >> $(@)
 	-$(SILENT) $(SHADERC) $(VS_FLAGS) --platform ios     -p metal  -O 3 -f $(<) -o $(SHADER_TMP) --bin2c $(basename $(<))_mtl
 	-@cat $(SHADER_TMP) >> $(@)
+	-@echo extern const uint8_t* $(basename $(<))_pssl;>> $(@)
+	-@echo extern const uint32_t $(basename $(<))_pssl_size;>> $(@)
 
 fs_%.bin.h : fs_%.sc
 	@echo [$(<)]
@@ -43,6 +45,8 @@ fs_%.bin.h : fs_%.sc
 	-@cat $(SHADER_TMP) >> $(@)
 	-$(SILENT) $(SHADERC) $(FS_FLAGS) --platform ios     -p metal  -O 3 -f $(<) -o $(SHADER_TMP) --bin2c $(basename $(<))_mtl
 	-@cat $(SHADER_TMP) >> $(@)
+	-@echo extern const uint8_t* $(basename $(<))_pssl;>> $(@)
+	-@echo extern const uint32_t $(basename $(<))_pssl_size;>> $(@)
 
 cs_%.bin.h : cs_%.sc
 	@echo [$(<)]
@@ -50,6 +54,8 @@ cs_%.bin.h : cs_%.sc
 	@cat $(SHADER_TMP) > $(@)
 	-$(SILENT) $(SHADERC) $(CS_FLAGS) --platform windows -p cs_5_0 -O 1 -f $(<) -o $(SHADER_TMP) --bin2c $(basename $(<))_dx11
 	-@cat $(SHADER_TMP) >> $(@)
+	-@echo extern const uint8_t* $(basename $(<))_pssl;>> $(@)
+	-@echo extern const uint32_t $(basename $(<))_pssl_size;>> $(@)
 
 .PHONY: all
 all: $(BIN)
